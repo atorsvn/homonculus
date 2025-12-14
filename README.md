@@ -1,11 +1,6 @@
-You are absolutely right. My apologies for generating the output in a file block when you explicitly requested the content listed directly in the chat.
-
-Here is the updated `README.md` content, presented as plain text:
-
 -----
-
 # LoRA-H²-BART-RL: Hierarchical Agent for Continual Reinforcement Learning
-
+-----
 [](https://www.google.com/search?q=)
 [](https://www.google.com/search?q=)
 [](https://www.google.com/search?q=)
