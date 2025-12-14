@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PROTOCOL: LoRA-H²-BART // CYBERNETIC</title>
+    <title>PROTOCOL: LoRA-H²-BART-RL // CYBERNETIC AGENT</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -165,6 +165,7 @@
             color: var(--cyber-yellow);
             clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
             transition: all 0.2s;
+            text-shadow: 0 0 5px rgba(252, 238, 10, 0.5);
         }
         .cyber-btn:hover {
             background: var(--cyber-yellow);
@@ -218,17 +219,17 @@
         <nav class="border-b border-cyber-gray p-4 flex justify-between items-center sticky top-0 bg-cyber-black/90 backdrop-blur z-40">
             <div class="flex items-center gap-4">
                 <div class="w-3 h-3 bg-cyber-red animate-pulse shadow-[0_0_10px_#ff003c]"></div>
-                <div class="font-bold text-2xl tracking-widest text-white glitch-text font-mono" data-text="LoRA-H²-BART">
-                    LoRA-H²-BART
+                <div class="font-bold text-2xl tracking-widest text-white glitch-text font-mono" data-text="LoRA-H²-BART-RL">
+                    LoRA-H²-BART-RL
                 </div>
             </div>
             <div class="hidden md:flex gap-6 font-mono text-xs tracking-widest text-cyber-blue">
-                <span>MEM: 128GB [OK]</span>
-                <span>NET: SECURE</span>
-                <span>PING: 2ms</span>
+                <span title="Dual Xeon E5 CPUs">CPU: E5x2 [OK]</span>
+                <span title="RTX 3060/Tesla P4">GPU: HYBRID [ACTIVE]</span>
+                <span title="Coral Edge TPU">TPU: OFFLOAD READY</span>
             </div>
-            <a href="https://github.com/atorsvn/homonculus/" class="cyber-btn px-6 py-1 text-sm font-bold uppercase tracking-wider hover:glitch-text" data-text="ACCESS REPO">
-                INIT_REPO.exe
+            <a href="https://github.com/atorsvn/homonculus/" class="cyber-btn px-6 py-1 text-sm font-bold uppercase tracking-wider hover:glitch-text" data-text="ACCESS POLICY">
+                POLICY_VIEW.exe
             </a>
         </nav>
 
@@ -237,25 +238,25 @@
             <div class="absolute top-0 right-0 w-64 h-64 bg-cyber-blue opacity-5 blur-[100px] group-hover:opacity-10 transition-opacity"></div>
             
             <div class="inline-block border border-cyber-yellow text-cyber-yellow px-2 py-0.5 text-xs font-mono mb-4 tracking-widest">
-                SYSTEM CLASS: SRGA // VER 1.0
+                SYSTEM CLASS: SRGA-RL // VERSION 1.1
             </div>
             
             <h1 class="text-5xl md:text-8xl font-black uppercase leading-[0.85] mb-6 relative">
-                <span class="block text-white" style="text-shadow: 2px 2px 0px #00f0ff;">Homuncular</span>
-                <span class="block text-cyber-yellow" style="text-shadow: -2px 2px 0px #ff003c;">Control</span>
-                <span class="block text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-white">Framework</span>
+                <span class="block text-white" style="text-shadow: 2px 2px 0px #00f0ff;">Autonomous PPO</span>
+                <span class="block text-cyber-yellow" style="text-shadow: -2px 2px 0px #ff003c;">Strategic</span>
+                <span class="block text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-white">Agent</span>
             </h1>
             
             <p class="font-mono text-cyber-blue max-w-xl text-lg mb-8 leading-relaxed border-l-4 border-cyber-red pl-4">
-                <span class="cursor type-effect">Resolving the Stability-Plasticity dilemma via hierarchical agentic intervention.</span>
+                <span class="cursor type-effect">Deploying hierarchical control for continuous learning and optimal decision-making in non-stationary RL environments.</span>
             </p>
 
             <div class="flex gap-4">
                 <button class="bg-cyber-yellow text-black font-bold px-8 py-3 clip-path-angle hover:bg-white transition-colors uppercase tracking-widest text-sm">
-                    Execute Simulation
+                    Execute RPG Protocol
                 </button>
                 <button class="border border-cyber-blue text-cyber-blue px-8 py-3 hover:bg-cyber-blue/10 transition-colors uppercase tracking-widest text-sm font-mono">
-                    View Specs
+                    System Specs
                 </button>
             </div>
         </header>
@@ -263,79 +264,63 @@
         <!-- MAIN GRID CONTENT -->
         <main class="grid grid-cols-1 lg:grid-cols-12 gap-0 border-t border-cyber-gray">
             
-            <!-- LEFT COLUMN: ONTOLOGY -->
+            <!-- LEFT COLUMN: ARCHITECTURE -->
             <div class="lg:col-span-8 p-8 md:p-12 border-r border-cyber-gray relative">
                 <div class="absolute top-4 right-4 text-cyber-gray/30 text-9xl font-black select-none z-0">01</div>
                 
                 <h2 class="text-3xl font-bold text-white mb-8 flex items-center gap-3 relative z-10">
-                    <i data-lucide="cpu" class="text-cyber-yellow"></i>
-                    <span class="glitch-text" data-text="SYSTEM ONTOLOGY">SYSTEM ONTOLOGY</span>
+                    <i data-lucide="brain-circuit" class="text-cyber-yellow"></i>
+                    <span class="glitch-text" data-text="VECTOR DB & PPO EXECUTION">VECTOR DB & PPO EXECUTION</span>
                 </h2>
 
                 <div class="cyber-box bg-cyber-gray/20 p-6 mb-8 backdrop-blur-sm">
                     <p class="text-gray-300 font-mono text-sm leading-relaxed">
-                        > INITIATING PROTOCOL...<br>
-                        > The Homuncular Meta-Controller (HMC) is not emergent.<br>
-                        > It is an explicit <span class="text-cyber-blue">System 2 Executive</span>.<br>
-                        > Unlike reflexive LLMs, this unit is <span class="text-cyber-red">reflective</span>.
+                        > ADAPTER BANK SCALED TO 256+ UNITS.<br>
+                        > SOFTMAX CLASSIFICATION DEPRECATED.<br>
+                        > ROUTER UPGRADED TO <span class="text-cyber-blue">VECTOR DATABASE QUERY</span>.<br>
+                        > PPO AGENT NOW CONTROLS <span class="text-cyber-red">GAME ACTION LOGITS</span>.
                     </p>
                 </div>
 
                 <!-- DIAGRAM VISUALIZATION -->
                 <div class="my-12 p-8 border border-cyber-blue/30 bg-black/50 relative overflow-hidden">
-                    <div class="absolute top-0 left-0 bg-cyber-blue text-black text-[10px] px-2 font-mono">DEBUG_VIEW: COGNITIVE_LOOP</div>
+                    <div class="absolute top-0 left-0 bg-cyber-blue text-black text-[10px] px-2 font-mono">DEBUG_VIEW: RL_ACTION_LOOP</div>
                     
-                    <!-- CSS FLOWCHART -->
-                    <div class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-4 font-mono text-xs relative z-10 mt-4">
+                    <div class="flex flex-col items-center font-mono text-xs relative z-10 mt-4">
                         
-                        <!-- NODE 1 -->
-                        <div class="node-box w-32 p-4 border border-white text-center bg-black/80 relative group">
-                            <div class="text-cyber-blue font-bold mb-1">INPUT</div>
-                            <div class="text-[10px] text-gray-400">Frozen Cortex</div>
-                            <!-- Connector -->
-                            <div class="hidden md:block absolute -right-4 top-1/2 w-4 h-0.5 bg-cyber-blue"></div>
+                        <div class="node-box w-48 p-3 border-2 border-cyber-yellow text-center bg-cyber-yellow/10 relative shadow-[0_0_20px_rgba(252,238,10,0.2)]">
+                            <div class="text-white font-bold mb-1 text-base">HOMUNCULUS AGENT</div>
+                            <div class="text-[10px] text-cyber-yellow">Outputs Strategy</div>
                         </div>
 
-                        <!-- ARROW -->
-                        <div class="text-cyber-blue animate-pulse hidden md:block">>></div>
+                        <div class="text-cyber-blue mt-4 mb-4 text-sm font-bold">V-PREDICT / A-LOGITS</div>
 
-                        <!-- NODE 2: AGENT -->
-                        <div class="node-box w-40 p-4 border-2 border-cyber-yellow text-center bg-cyber-yellow/10 relative shadow-[0_0_20px_rgba(252,238,10,0.2)]">
-                            <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-black px-2 text-cyber-yellow border border-cyber-yellow">AGENCY</div>
-                            <div class="text-white font-bold mb-1">HOMUNCULUS</div>
-                            <div class="text-[10px] text-cyber-yellow">Policy Check</div>
-                            
-                            <!-- Branching lines -->
-                            <div class="absolute w-0.5 h-8 bg-cyber-yellow -bottom-8 left-1/2"></div>
-                        </div>
-
-                        <!-- NODE 3: ACTION -->
-                        <div class="absolute md:relative top-24 md:top-0">
-                            <div class="flex gap-4">
-                                <div class="node-box p-2 border border-cyber-red text-cyber-red text-center w-24">
-                                    STEER
-                                </div>
-                                <div class="node-box p-2 border border-cyber-red text-cyber-red text-center w-24">
-                                    ROUTE
-                                </div>
+                        <!-- Action Path -->
+                        <div class="flex gap-4 mb-8">
+                             <div class="node-box p-3 border border-cyber-red text-center w-32">
+                                <div class="text-cyber-red">GAME COMMAND</div>
+                                <div class="text-[10px] text-gray-400">PPO Training Target</div>
                             </div>
+                            <div class="node-box p-3 border border-cyber-red text-center w-32">
+                                <div class="text-cyber-red">STEERING VECTOR</div>
+                                <div class="text-[10px] text-gray-400">Tone Modulation</div>
+                            </div>
+                        </div>
+                        
+                        <div class="text-cyber-blue mb-4 text-sm font-bold">QUERY VECTOR</div>
+                        
+                        <!-- Query Path -->
+                        <div class="node-box w-64 p-3 border border-white text-center bg-black/80">
+                            <div class="text-white font-bold mb-1">VECTOR DB LOOKUP</div>
+                            <div class="text-[10px] text-gray-400">Retrieves Adapter Index (Combat/Puzzle/Dialogue)</div>
                         </div>
 
                     </div>
                     
-                    <!-- Background Grid for Diagram -->
                     <div class="absolute inset-0 z-0 opacity-20" 
                          style="background-image: linear-gradient(#00f0ff 1px, transparent 1px), linear-gradient(90deg, #00f0ff 1px, transparent 1px); background-size: 20px 20px;">
                     </div>
                 </div>
-
-                <h3 class="text-xl text-cyber-blue font-bold mb-4 flex items-center gap-2">
-                    <i data-lucide="terminal" size="18"></i>
-                    TRAINING_OBJECTIVE
-                </h3>
-                <p class="text-gray-400 text-sm max-w-2xl">
-                    The Agent is trained via <span class="text-white bg-cyber-red/20 px-1">Proximal Policy Optimization (PPO)</span>. It optimizes for orthogonality and safety, independent of the backbone's perplexity minimization.
-                </p>
 
             </div>
 
@@ -344,8 +329,8 @@
                 <div class="sticky top-20">
                     <!-- HEADER -->
                     <div class="bg-cyber-yellow text-black p-2 font-bold font-mono text-sm flex justify-between">
-                        <span>// ACTION_SPACE</span>
-                        <span>[R/W]</span>
+                        <span>// RESOURCE_ALLOCATION</span>
+                        <span>[HPE DL360 G9]</span>
                     </div>
 
                     <!-- TABLE STYLE LIST -->
@@ -354,49 +339,39 @@
                         <!-- ROW 1 -->
                         <div class="p-4 border-b border-gray-800 hover:bg-white/5 transition-colors group">
                             <div class="flex justify-between items-center mb-1">
-                                <span class="text-cyber-blue font-bold text-base group-hover:text-white">ROUTING</span>
-                                <span class="text-gray-500">OP_CODE: 0x01</span>
+                                <span class="text-cyber-blue font-bold text-base group-hover:text-white">LoRA ADAPTERS</span>
+                                <span class="text-gray-500">GRADS: 2%</span>
                             </div>
-                            <div class="text-gray-400 mb-2"><code>idx = argmax(policy(h))</code></div>
+                            <div class="text-gray-400 mb-2">Plasticity / Skill Storage</div>
                             <div class="text-cyber-yellow text-[10px] uppercase tracking-wider">
-                                > Context Switching<br>> Skill Selection
+                                > Orthogonality enforced<br>> Catastrophic forgetting neutralized
                             </div>
                         </div>
 
                         <!-- ROW 2 -->
                         <div class="p-4 border-b border-gray-800 hover:bg-white/5 transition-colors group">
                             <div class="flex justify-between items-center mb-1">
-                                <span class="text-cyber-red font-bold text-base group-hover:text-white">STEERING</span>
-                                <span class="text-gray-500">OP_CODE: 0x02</span>
+                                <span class="text-cyber-red font-bold text-base group-hover:text-white">VQ BOTTLENECK</span>
+                                <span class="text-gray-500">STATE: DISCRETE</span>
                             </div>
-                            <div class="text-gray-400 mb-2"><code>h_mod = h + v_steer</code></div>
+                            <div class="text-gray-400 mb-2">Memory Anchor / Stability</div>
                             <div class="text-cyber-yellow text-[10px] uppercase tracking-wider">
-                                > Bias Injection<br>> Activation Eng.
+                                > H-RVQ prevents latent drift<br>> Stabilizes semantic concepts
                             </div>
                         </div>
 
                         <!-- ROW 3 -->
                         <div class="p-4 border-b border-gray-800 hover:bg-white/5 transition-colors group">
                             <div class="flex justify-between items-center mb-1">
-                                <span class="text-white font-bold text-base group-hover:text-cyber-blue">PONDERING</span>
-                                <span class="text-gray-500">OP_CODE: 0x03</span>
+                                <span class="text-white font-bold text-base group-hover:text-cyber-blue">PPO AGENT</span>
+                                <span class="text-gray-500">TRAIN: RL</span>
                             </div>
-                            <div class="text-gray-400 mb-2"><code>while gate > 0.5</code></div>
+                            <div class="text-gray-400 mb-2">Strategic Policy Network</div>
                             <div class="text-cyber-yellow text-[10px] uppercase tracking-wider">
-                                > Rumination Loop<br>> Refinement
+                                > XEON E5 OFFLOAD<br>> CORAL TPU READY
                             </div>
                         </div>
 
-                    </div>
-
-                    <!-- DECORATIVE CODE BLOCK -->
-                    <div class="p-4 mt-8 opacity-50 select-none">
-                        <div class="text-[10px] text-green-500 font-mono leading-tight">
-                            0F 2A 4C 99 1B<br>
-                            E2 90 11 FF 00<br>
-                            SYSTEM_HASH: VERIFIED<br>
-                            ... CONNECTING TO NET ...
-                        </div>
                     </div>
                 </div>
             </div>
@@ -408,7 +383,7 @@
             <div>
                 <div class="text-cyber-yellow font-black text-2xl tracking-tighter mb-1">ARASAKA_LABS</div>
                 <div class="text-gray-600 text-xs font-mono">
-                    COPYRIGHT 2077 // UNAUTHORIZED ACCESS IS TREASON
+                    COPYRIGHT 2025 // UNAUTHORIZED ACCESS IS TREASON
                 </div>
             </div>
             <div class="flex gap-4 text-cyber-blue">
@@ -443,10 +418,10 @@
         
         const logs = [
             "BIOS CHECK...",
-            "LOADING KERNEL...",
-            "MOUNTING VOLUMES...",
-            "DECRYPTING NEURAL NET...",
-            "INIT HOMUNCULUS..."
+            "LOADING KERNEL 1.1...",
+            "MOUNTING ADAPTER DB...",
+            "INIT PPO AGENT...",
+            "VECTOR DATABASE ONLINE."
         ];
 
         let logIndex = 0;

@@ -1,26 +1,29 @@
-# Agentic Specification: The Homuncular Meta-Controller
 
-## 1. Ontology of the Agent
-In the LoRA-H²-BART architecture, "Agency" is not an emergent property of the text generation, but an explicit architectural component known as the **Homuncular Meta-Controller (HMC)**.
+# Agentic Specification: The Autonomous RL Agent
 
-Unlike standard LLMs which are "reflexive" (Input $\rightarrow$ Output), this system is "reflective." The HMC acts as a **System 2** observer that monitors the **System 1** (Frozen BART Backbone) thought process and intervenes before action (generation) is taken.
+## 1. Role Shift: From Router to Player
+The Homuncular Meta-Controller (HMC) in the RL variant is an autonomous agent designed for non-stationary environments (like a procedural Text-Based RPG). Its goal is to master strategic play, not just administrative resource management.
 
-## 2. The Agent's Action Space
-The HMC ($\pi_\phi$) does not generate tokens. It manipulates the *conditions* of generation.
+### Key Outputs of the Agent:
+1.  **Game Action Logits:** The primary mechanism for interaction. The Agent generates the command to be executed (e.g., `GO EAST`, `ATTACK`).
+2.  **Value Prediction:** Estimates the expected future reward from the current game state, crucial for the PPO update.
+3.  **Steering Vector:** Modulates the chosen adapter's output (e.g., "Describe the battle vividly," or "Be terse and purely functional").
 
-| Action Type | Mechanism | Cognitive Analogue |
+## 2. The Vector Database Router (Scalable Resource Management)
+The traditional Softmax head is replaced by a Vector Database lookup:
+1.  The Agent uses the continuous **Encoder Output** (the meaning of the current scene description) as a **Query Vector**.
+2.  This query is checked against a database of **Adapter Embeddings** (vectors representing the expertise of each skill set: *combat*, *puzzle*, *dialogue*, *stealth*, etc.).
+3.  The Cosine Similarity selects the top matching adapter, which is then activated for text generation.
+
+**Benefit:** This scales linearly. Adding a new skill set (e.g., "Underwater Combat") requires only adding a new vector to the database, not retraining the entire Router head. This makes the system ideal for perpetually expanding RPG worlds.
+
+## 3. Training the Strategy (PPO Update)
+The Agent's weights are trained using PPO to maximize the game reward (e.g., finding treasure, defeating a boss). This process leverages your **Dual Xeon E5 CPUs** for efficient experience rollout and your GPU for policy updates.
+
+| PPO Component | Source Data | Role in RPG |
 | :--- | :--- | :--- |
-| **Routing** | `adapter_idx = argmax(policy(h))` | **Context Switching**: Deciding *which* personality or skill set is required for the current task (e.g., Coding vs. Poetry). |
-| **Steering** | `h_mod = h + v_steer` | **Bias Injection**: Deliberately shifting emotional tone or focus (e.g., "Be more polite" or "Focus on facts"). |
-| **Pondering** | `while ponder_gate > 0.5: refine(h)` | **Rumination**: Looping on a thought to increase clarity before speaking. |
-
-## 3. Cognitive Control Loop
-The agent operates within the `Perception-Modulation-Action` loop:
-
-1.  **Sensation (Input):** The frozen encoder processes raw text. The Agent receives a `stop_gradient` copy of this state. This ensures the Agent cannot "hallucinate" or alter the raw sensory data to suit its preferences; it must deal with reality as it is.
-2.  **Deliberation (Policy):** The Agent computes a policy distribution over the available LoRA adapters and calculates a continuous steering vector.
-3.  **Intervention (Modulation):** The Agent physically alters the neural activations of the backbone model, injecting its intent into the residual stream.
-4.  **Commitment (Quantization):** The modified thought is "collapsed" into a discrete code from the VQ Codebook. This is the moment a fluid thought becomes a concrete memory.
-
-## 4. Training the Agent
-The Agent is not trained via next-token prediction. It is trained via **Reinforcement Learning (PPO)** or explicit supervision to maximize high-level objectives (e.g., Safety, Orthogonality, Task Success), distinct from the language model's objective (Perplexity).
+| **State** | Encoder Output $H_{enc}$ | The Agent's current perception of the game world. |
+| **Action** | Game Action Logits (The command executed) | The move made by the Agent (e.g., `ATTACK GOBLIN`). |
+| **Reward** | Game Engine Feedback | The score received (e.g., +10 XP for a successful move). |
+| **Value Head** | Predicts the expected score from $H_{enc}$. | Used to calculate the Advantage (how much better the move was than expected). |
+```

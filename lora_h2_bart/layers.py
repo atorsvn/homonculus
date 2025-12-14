@@ -1,5 +1,8 @@
 import keras
 import tensorflow as tf
+from .config import ModelConfig
+
+# --- Stability Mechanism ---
 
 class VectorQuantizer(keras.layers.Layer):
     """Discrete bottleneck with Straight-Through Estimator."""
@@ -21,7 +24,7 @@ class VectorQuantizer(keras.layers.Layer):
         input_shape = tf.shape(x)
         flattened = tf.reshape(x, [-1, self.embedding_dim])
 
-        # Distances
+        # Distances calculation
         similarity = tf.matmul(flattened, self.embeddings, transpose_b=True)
         distances = (
             tf.reduce_sum(flattened**2, axis=1, keepdims=True)
@@ -34,7 +37,7 @@ class VectorQuantizer(keras.layers.Layer):
         quantized = tf.matmul(encodings, self.embeddings)
         quantized = tf.reshape(quantized, input_shape)
 
-        # Losses
+        # Commitment and Codebook Losses
         commitment_loss = tf.reduce_mean((tf.stop_gradient(quantized) - x) ** 2)
         codebook_loss = tf.reduce_mean((quantized - tf.stop_gradient(x)) ** 2)
         self.add_loss(self.beta * commitment_loss + codebook_loss)
@@ -43,7 +46,7 @@ class VectorQuantizer(keras.layers.Layer):
         return x + tf.stop_gradient(quantized - x)
 
 class ResidualVQ(keras.layers.Layer):
-    """Hierarchical VQ."""
+    """Hierarchical VQ wrapper."""
     def __init__(self, num_quantizers, num_embeddings, embedding_dim, **kwargs):
         super().__init__(**kwargs)
         self.layers = [
@@ -60,9 +63,11 @@ class ResidualVQ(keras.layers.Layer):
             quantized_out = quantized_out + quantized
         return quantized_out
 
+# --- Plasticity Mechanism ---
+
 class LoRADense(keras.layers.Layer):
-    """Multi-Head LoRA Adapter Layer."""
-    def __init__(self, original_layer, rank=8, num_adapters=5, **kwargs):
+    """Multi-Head LoRA Adapter Layer with Orthogonality Constraint."""
+    def __init__(self, original_layer, rank=16, num_adapters=5, **kwargs):
         super().__init__(**kwargs)
         self.original_layer = original_layer
         self.original_layer.trainable = False 
@@ -88,44 +93,58 @@ class LoRADense(keras.layers.Layer):
     def call(self, inputs, adapter_index=0):
         frozen_out = self.original_layer(inputs)
         
+        # Select the active adapter based on index (chosen by Vector DB/Router)
         A = tf.gather(self.lora_A, adapter_index) 
         B = tf.gather(self.lora_B, adapter_index)
-        
-        # Determine if we are in batch mode (A is [B, In, Rank]) or global mode (A is [In, Rank])
-        # If adapter_index is a scalar, we treat A as shared for the batch.
-        # If adapter_index is [Batch], we need simpler logic or map_fn. 
-        # For this repo, we assume scalar index (one task per batch).
         
         lora_out = tf.matmul(inputs, A)
         lora_out = tf.matmul(lora_out, B)
         return frozen_out + (lora_out * (1.0 / self.rank))
 
     def orthogonality_loss(self):
+        """Calculates orthogonality between different adapter matrices."""
+        # This is added to the total loss to ensure task separation.
         flat_A = tf.reshape(self.lora_A, (self.num_adapters, -1))
         gram = tf.matmul(flat_A, flat_A, transpose_b=True)
         identity = tf.eye(self.num_adapters)
+        # We penalize all off-diagonal interactions
         return tf.reduce_mean((gram * (1 - identity)) ** 2)
 
+# --- Homuncular RL Agent ---
+
 class HomuncularController(keras.layers.Layer):
-    """The Agent."""
-    def __init__(self, hidden_dim, num_adapters, **kwargs):
+    """
+    The Active RL Agent: Manages resource selection and outputs the next game command.
+    """
+    def __init__(self, config: ModelConfig, **kwargs):
         super().__init__(**kwargs)
+        self.hidden_dim = config.hidden_dim
+        self.action_space_size = config.rl_action_space_size 
+
+        # Policy Network (processes the state)
         self.policy_net = keras.Sequential([
             keras.layers.Dense(256, activation="relu"),
             keras.layers.Dense(128, activation="relu")
         ])
-        self.router = keras.layers.Dense(num_adapters, activation="softmax")
-        self.steer = keras.layers.Dense(hidden_dim, activation="tanh")
-        self.ponder = keras.layers.Dense(1, activation="sigmoid")
+        
+        # HEAD 1: Steering Head (Continuous action for tone/style)
+        self.steer = keras.layers.Dense(self.hidden_dim, activation="tanh", name="steer")
+        
+        # HEAD 2: VALUE Head (Estimates future reward for PPO)
+        self.value_head = keras.layers.Dense(1, name="value")
+
+        # HEAD 3: ACTION Head (Discrete action for game play)
+        self.action_head = keras.layers.Dense(self.action_space_size, activation=None, name="action_logits")
 
     def call(self, inputs):
-        # Stop gradient is CRITICAL for agentic separation
+        # Stop gradient is CRITICAL to keep the agent policy separate
         x = tf.stop_gradient(inputs)
         context = tf.reduce_mean(x, axis=1) # [B, Seq, Dim] -> [B, Dim]
         
         features = self.policy_net(context)
+        
         return {
-            "route": self.router(features),
-            "steer": tf.expand_dims(self.steer(features), 1),
-            "ponder": self.ponder(features)
+            "steer": tf.expand_dims(self.steer(features), 1), 
+            "value": self.value_head(features),
+            "action_logits": self.action_head(features)
         }
